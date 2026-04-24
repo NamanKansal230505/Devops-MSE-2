@@ -1,0 +1,98 @@
+# ============================================================
+# DevOps MSE 2 - Test Case 3
+# Node.js Application Setup & Git Integration
+# ============================================================
+
+
+# ------------------------------------------------------------
+# TASK 1: Initialize Node.js project and install dependencies
+# ------------------------------------------------------------
+
+mkdir nodejs-api
+cd nodejs-api
+
+npm init -y
+# Initializes a new Node.js project with default values (creates package.json)
+
+npm install express
+# Installs Express framework as a runtime dependency
+
+npm install --save-dev @types/express
+# Installs TypeScript type definitions for Express as a dev dependency
+
+
+# ------------------------------------------------------------
+# TASK 2: Create index.js with Express server on port 8080
+# ------------------------------------------------------------
+
+# Create index.js with the following content:
+#
+# const express = require('express');
+# const app = express();
+# const PORT = 8080;
+#
+# app.get('/health', (req, res) => {
+#   res.status(200).json({ status: 'OK' });
+# });
+#
+# app.listen(PORT, () => {
+#   console.log(`Server running at http://localhost:${PORT}`);
+# });
+
+# Start the server
+node index.js
+
+# Test the /health endpoint in another terminal
+curl http://localhost:8080/health
+# Expected response: {"status":"OK"}
+
+
+# ------------------------------------------------------------
+# TASK 3: Initialize Git repository
+# ------------------------------------------------------------
+
+git init -b main
+# Initializes a new Git repository with 'main' as default branch
+
+# Create a .gitignore file to exclude node_modules/ from version control
+echo "node_modules/" > .gitignore
+
+
+# ------------------------------------------------------------
+# TASK 4: Create initial commit with all project files
+# ------------------------------------------------------------
+
+git add .
+# Stages all project files for commit
+
+git commit -m "Initial commit: Node.js Express API with /health endpoint"
+# Creates the initial commit
+
+
+# ------------------------------------------------------------
+# TASK 5: Create GitHub repo 'nodejs-api' and push
+# ------------------------------------------------------------
+
+gh repo create nodejs-api --public --source=. --remote=origin --push
+# Creates a public GitHub repository named 'nodejs-api',
+# adds it as the 'origin' remote, and pushes the main branch
+
+# Alternative (manual) method:
+# git remote add origin https://github.com/<username>/nodejs-api.git
+# git branch -M main
+# git push -u origin main
+
+
+# ============================================================
+# EXPECTED OUTCOME
+# ------------------------------------------------------------
+# - Project folder contains: package.json, package-lock.json,
+#   node_modules/, and index.js
+# - GET /health returns: {"status":"OK"} with HTTP 200
+# - Public GitHub repo 'nodejs-api' contains the initial commit
+#   with all project files
+# ============================================================
+
+
+# Live Repository:
+# https://github.com/NamanKansal230505/nodejs-api
