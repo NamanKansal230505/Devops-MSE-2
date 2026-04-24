@@ -1,0 +1,103 @@
+# ============================================================
+# DevOps MSE 2 - Test Case 2
+# File Permission Configuration (index.html for web server)
+# ============================================================
+
+
+# ------------------------------------------------------------
+# TASK 1: Navigate to home directory and create index.html
+# ------------------------------------------------------------
+
+cd ~
+# Changes working directory to the current user's home directory
+
+touch index.html
+# Creates an empty file named 'index.html' in the home directory
+
+pwd
+# Prints the current working directory to confirm location
+
+ls -l index.html
+# Confirms the file was created
+
+
+# ------------------------------------------------------------
+# TASK 2: Add HTML text content to the file
+# ------------------------------------------------------------
+
+echo "<html><head><title>Welcome</title></head><body><h1>Hello DevOps MSE</h1></body></html>" > index.html
+# Writes basic HTML content into index.html (overwrites if file existed)
+
+cat index.html
+# Displays the file content to verify it was written correctly
+
+
+# ------------------------------------------------------------
+# TASK 3: Check the file's current default permissions
+# ------------------------------------------------------------
+
+ls -l index.html
+# Shows current permissions, owner, group, size, and timestamp
+# Default is usually: -rw-r--r-- (644)
+
+stat index.html
+# Displays detailed file information including permissions in both symbolic and octal form
+
+
+# ------------------------------------------------------------
+# TASK 4: Grant full permissions (rwx) to all users
+# ------------------------------------------------------------
+
+chmod 777 index.html
+# Grants read, write, execute permissions to owner, group, and others
+
+# Alternate symbolic form:
+# chmod a+rwx index.html
+
+ls -l index.html
+# Verify permissions now show: -rwxrwxrwx
+
+
+# ------------------------------------------------------------
+# TASK 5: Change file owner and group to www-data
+# ------------------------------------------------------------
+
+sudo chown www-data:www-data index.html
+# Changes both owner and group of the file to 'www-data' (standard web server user)
+
+ls -l index.html
+# Verify owner and group columns now display 'www-data www-data'
+
+
+# ------------------------------------------------------------
+# TASK 6: Change file permissions to 755
+# ------------------------------------------------------------
+
+sudo chmod 755 index.html
+# Sets permissions:
+#   Owner  -> rwx (7)  read, write, execute
+#   Group  -> r-x (5)  read, execute
+#   Others -> r-x (5)  read, execute
+
+
+# ------------------------------------------------------------
+# TASK 7: Display final permissions and ownership for verification
+# ------------------------------------------------------------
+
+ls -l index.html
+# Expected output:
+# -rwxr-xr-x 1 www-data www-data ... index.html
+
+stat index.html
+# Detailed verification of permissions, ownership, and file metadata
+
+
+# ============================================================
+# EXPECTED OUTCOME
+# ------------------------------------------------------------
+# - index.html exists in the home directory with HTML content
+# - After Task 4: permissions = rwxrwxrwx (777)
+# - After Task 5: owner = www-data, group = www-data
+# - Final ls -l output:
+#   -rwxr-xr-x 1 www-data www-data ... index.html
+# ============================================================

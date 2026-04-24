@@ -1,0 +1,127 @@
+# ============================================================
+# DevOps MSE 2 - Test Case 1
+# Linux System Audit & User Management
+# ============================================================
+
+
+# ------------------------------------------------------------
+# TASK 1: Check identity of currently logged-in user
+# ------------------------------------------------------------
+
+whoami
+# Displays the username of the current session (effective user)
+
+id
+# Shows the current user's UID, GID, and group memberships
+
+
+# ------------------------------------------------------------
+# TASK 2: Check which users are currently logged in and what they are doing
+# ------------------------------------------------------------
+
+who
+# Lists all users currently logged into the system with terminal and login time
+
+w
+# Shows logged-in users along with the processes/commands they are currently running
+
+
+# ------------------------------------------------------------
+# TASK 3: View the login history of the system
+# ------------------------------------------------------------
+
+last
+# Displays a list of all users' login/logout history from /var/log/wtmp
+
+lastlog
+# Displays the most recent login time of every user on the system
+
+
+# ------------------------------------------------------------
+# TASK 4: Display complete system information, hostname, and uptime
+# ------------------------------------------------------------
+
+uname -a
+# Shows complete system information (kernel name, hostname, kernel version, architecture, OS)
+
+hostname
+# Displays the system's hostname
+
+uptime
+# Shows how long the system has been running, number of users, and load average
+
+
+# ------------------------------------------------------------
+# TASK 5: Create two groups (developers, qa) and verify
+# ------------------------------------------------------------
+
+sudo groupadd developers
+# Creates a new group named 'developers'
+
+sudo groupadd qa
+# Creates a new group named 'qa'
+
+getent group developers
+# Verifies that the 'developers' group exists
+
+getent group qa
+# Verifies that the 'qa' group exists
+
+cat /etc/group
+# Displays the complete list of all groups present on the system
+
+
+# ------------------------------------------------------------
+# TASK 6: Create users and assign them to their respective groups
+# ------------------------------------------------------------
+
+sudo useradd -m -g developers aman
+# Creates user 'aman' with a home directory and assigns primary group 'developers'
+
+sudo useradd -m -g developers ritu
+# Creates user 'ritu' with a home directory and assigns primary group 'developers'
+
+sudo useradd -m -g qa karan
+# Creates user 'karan' with a home directory and assigns primary group 'qa'
+
+# Set passwords (optional but recommended for real onboarding)
+sudo passwd aman
+sudo passwd ritu
+sudo passwd karan
+
+# Verify each user and group assignment
+id aman
+id ritu
+id karan
+# The 'id' command confirms the UID, GID, and group membership of each user
+
+
+# ------------------------------------------------------------
+# TASK 7: Employee 'ritu' has resigned - remove her account completely
+# ------------------------------------------------------------
+
+who | grep ritu
+# Check whether 'ritu' has any active login session
+
+sudo pkill -KILL -u ritu
+# Terminate all processes and active sessions belonging to 'ritu'
+
+sudo userdel -r ritu
+# Deletes the user 'ritu' along with her home directory and mail spool (-r flag)
+
+# Verify that the user no longer exists
+id ritu
+# Expected output: "id: 'ritu': no such user"
+
+getent passwd ritu
+# Returns nothing if the user has been successfully removed
+
+
+# ============================================================
+# EXPECTED OUTCOME
+# ------------------------------------------------------------
+# - whoami, who, w, last, uname -a, hostname, uptime run without errors
+# - 'developers' and 'qa' groups appear in /etc/group
+# - 'aman' -> developers, 'karan' -> qa (verified via id command)
+# - 'ritu' is completely removed: id ritu -> "no such user"
+# ============================================================
